@@ -1,0 +1,29 @@
+{
+  "name": "jii-comet",
+  "version": "0.4.0",
+  "description": "Jii comet server & client",
+  "main": "index.js",
+  "browser": "index-client.js",
+  "author": "Vladimir Kozhin <affka@affka.ru>",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jiisoft/jii-comet"
+  },
+  "keywords": [
+    "yii",
+    "php",
+    "framework",
+    "javascript"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jiisoft/jii-comet",
+  "bugs": {
+    "url": "https://github.com/jiisoft/jii-comet/issues"
+  },
+  "devDependencies": {
+    "nodeunit": "^0.9.0",
+    "require-all": "0.0.8"
+  }
+}
