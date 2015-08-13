@@ -1,12 +1,11 @@
 {
   "name": "jii-comet",
-  "version": "0.4.0",
+  "version": "0.4.5",
   "description": "Jii comet server & client",
   "main": "index.js",
   "browser": "index-client.js",
   "author": "Vladimir Kozhin <affka@affka.ru>",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/jiisoft/jii-comet"
@@ -23,7 +22,13 @@
     "url": "https://github.com/jiisoft/jii-comet/issues"
   },
   "devDependencies": {
+    "gulp": "^3.9.0",
     "nodeunit": "^0.9.0",
     "require-all": "0.0.8"
+  },
+  "dependencies": {
+    "redis": "^0.12.1",
+    "require-all": "^1.1.0",
+    "sockjs": "^0.3.15"
   }
 }
