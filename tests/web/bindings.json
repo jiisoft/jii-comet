@@ -1,0 +1,11 @@
+{
+    "profiles": {
+        "main": {
+            "User": {
+                "serverModel": "app\\core\\models\\User",
+                "match": {
+                }
+            }
+        }
+    }
+}
