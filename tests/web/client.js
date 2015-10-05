@@ -9,7 +9,7 @@ Jii.createWebApplication({
         basePath: '/',
         components: {
             comet: {
-                className: 'Jii.comet.client.ControllerClient',
+                className: 'Jii.comet.client.Client',
                 serverUrl: 'http://localhost:4100/comet'
             },
             neat: {
