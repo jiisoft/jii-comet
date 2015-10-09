@@ -10,16 +10,32 @@ Jii.createWebApplication({
         components: {
             comet: {
                 className: 'Jii.comet.client.Client',
-                serverUrl: 'http://localhost:4100/comet'
+                serverUrl: 'http://127.0.0.1:3100/stat/node-comet/0/'
             },
             neat: {
                 className: 'Jii.comet.client.NeatClient'
             }
         }
     }
-});
+}).start();
 
-Jii.app.neat.open({
-    main: {
+
+NeatComet.NeatCometClient.prototype.profilesDefinition = {
+    "test": {
+        "all": {
+            "abc": 123
+        },
+        "channelFiltered": null,
+        "jsFiltered": null,
+        "bothFiltered": null
+    },
+    "linkTest": {
+        "master": null,
+        "detail": null
     }
+};
+
+Jii.app.neat.openProfile('test', {
+    category: 'n',
+    filter: 'nn'
 });

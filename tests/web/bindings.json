@@ -1,9 +1,11 @@
 {
     "profiles": {
-        "main": {
-            "User": {
+        "test": {
+            "all": {
                 "serverModel": "app\\core\\models\\User",
-                "match": {
+
+                "client": {
+                    "abc": 123
                 }
             }
         }
