@@ -1,6 +1,6 @@
 {
   "name": "jii-comet",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Jii comet server & client",
   "main": "index.js",
   "browser": "index-client.js",
@@ -29,6 +29,7 @@
   "dependencies": {
     "redis": "^0.12.1",
     "require-all": "^1.1.0",
-    "sockjs": "^0.3.15"
+    "sockjs": "^0.3.15",
+    "sockjs-client": "^1.0.3"
   }
 }
