@@ -24,7 +24,8 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "nodeunit": "^0.9.0",
-    "require-all": "0.0.8"
+    "require-all": "0.0.8",
+    "neatcomet": "ExtPoint/NeatComet"
   },
   "dependencies": {
     "redis": "^0.12.1",
