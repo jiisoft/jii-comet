@@ -1,4 +1,3 @@
-
 /**
  * @namespace Jii
  * @ignore
@@ -7,80 +6,79 @@ global.Jii = require('jii');
 
 require('jii-httpServer');
 require('jii-comet');
+require('jii-ar-sql');
 
-var custom = {};//require('./config');
+global.app = Jii.namespace('app');
+
+require('./models/DemoRow');
+
+var custom = {};
 require('jii-workers')
-    .application('comet', Jii.mergeConfigs(
-        {
-            application: {
-                basePath: __dirname,
-                inlineActions: {
-                    // From php to comet
-                    'stat/node': function(context) {
-                        switch (context.request.post('method')) {
-                            case 'publish':
-                                var channel = context.request.post('channel');
-                                var data = context.request.post('data');
-
-                                if (channel && data) {
-                                    Jii.app.comet.sendToChannel(channel, JSON.parse(data));
-                                    return 'ok';
+    .application('comet', {
+        application: {
+            basePath: __dirname,
+            inlineActions: {
+                'site/index': function (context) {
+                    var clientConfig = {
+                        application: {
+                            components: {
+                                db: {
+                                    schema: {
+                                        tables: Jii.app.db.getModelSchemaJson([
+                                            'ep_comet_sample_demo_rows'
+                                        ])
+                                    }
                                 }
-
-                                context.response.setStatusCode(400);
-                                return 'Channel and data params is required.';
-
-                            default:
-                                context.response.setStatusCode(400);
-                                return 'Wrong api method.';
+                            }
                         }
+                    };
+
+                    return require('fs').readFileSync(__dirname + '/index.html')
+                        .toString().replace(
+                            '</head>',
+                            '\t<script>JII_CONFIG = ' + Jii._s.trim(JSON.stringify(clientConfig), '"') + ';</script>\n$&'
+                        );
+                },
+                'demo/add': function (context) {
+                    var model = new app.models.DemoRow();
+                    model.setAttributes(context.request.get());
+                    model.save();
+                },
+                'demo/remove': function (context) {
+                    app.models.DemoRow.findOne(context.request.get('id')).then(function (model) {
+                        model.delete();
+                    })
+                }
+            },
+            components: {
+                db: {
+                    className: 'Jii.sql.mysql.Connection',
+                    database: 'chiliproject',
+                    username: 'root',
+                    password: '123'
+                },
+                comet: {
+                    className: 'Jii.comet.server.Server',
+                    port: 3100,
+                    host: '127.0.0.1',
+                    transport: {
+                        className: 'Jii.comet.server.transport.SockJs', // @todo automerge objects in config
+                        urlPrefix: '/stat/node-comet/[0-9]+'
                     }
                 },
-                components: {
-                    comet: {
-                        className: 'Jii.comet.server.Server',
-                        port: 3100,
-                        host: '127.0.0.1',
-                        transport: {
-                            className: 'Jii.comet.server.transport.SockJs', // @todo automerge objects in config
-                            urlPrefix: '/stat/node-comet/[0-9]+'
-                        }
-                    },
-                    neat: {
-                        className: 'Jii.comet.server.NeatServer',
-                        configFileName: __dirname + '/../../../../../chiliproject.local/protected/app/config/cometBindingFiles.json',
-
-                        // From comet to php
-                        dataLoadHandler: function(params) {
-                            // @todo Php server url
-                            var url = 'http://chiliproject.local/stat/comet/api/load-data/';
-                            var data = { msg: JSON.stringify(params) };
-
-                            return new Promise(function(resolve) {
-                                require('request')({
-                                    method: 'POST',
-                                    uri: url,
-                                    form: data
-                                }, function(error, response, body) {
-                                    if (error || !response || response.statusCode >= 400) {
-                                        throw new Jii.exceptions.ApplicationException('Request to server `' + url + '` failed: ' + error);
-                                    }
-
-                                    resolve(JSON.parse(body));
-                                });
-                            });
-                        }
-                    },
-                    urlManager: {
-                        className: 'Jii.urlManager.UrlManager'
-                    },
-                    http: {
-                        className: 'Jii.httpServer.HttpServer',
-                        port: 3000
-                    }
+                neat: {
+                    className: 'Jii.comet.server.NeatServer',
+                    bindings: require('./bindings.json').profiles
+                },
+                urlManager: {
+                    className: 'Jii.urlManager.UrlManager'
+                },
+                http: {
+                    className: 'Jii.httpServer.HttpServer',
+                    port: 3000,
+                    staticDirs: __dirname + '/public'
                 }
             }
-        },
-        custom.comet || {}
-    ));
+        }
+    });
 
