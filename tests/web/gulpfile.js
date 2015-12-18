@@ -1,2 +1,2 @@
 require('gulp-easy')(require('gulp'))
-    .js('client.js', 'public/app-client.js');
+    .js('client/client.js', 'web/app-client.js');

@@ -1,0 +1,32 @@
+<%
+"use strict";
+
+/** @typedef {String} content */
+/** @this {Jii.view.WebView} */
+(function() {
+    this.registerCssFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
+    this.registerJsFile('https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js');
+    this.registerJsFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
+    this.registerJsFile('app-client.js');
+%>
+<!DOCTYPE html>
+<html lang="<%= Jii.app.language %>">
+<head>
+    <meta charset="<%- Jii.app.charset %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <title><%- this.title ? this.title + ' — ' : '' %>Jii Framework</title>
+    <%= this.head() %>
+</head>
+<body>
+<%= this.beginBody() %>
+
+<div class="container">
+    <%= content %>
+</div>
+
+<%= this.endBody() %>
+</body>
+</html>
+
+<% }).call(this) %>

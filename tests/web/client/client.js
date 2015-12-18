@@ -5,11 +5,11 @@ require('jii-ar-sql');
 
 var app = Jii.namespace('app');
 
-require('./models/DemoRow');
+require('../models/DemoRow');
 
 $(function () {
 
-    Jii.createWebApplication(Jii.mergeConfigs(window.JII_CONFIG, {
+    Jii.createWebApplication(Jii.mergeConfigs({
         application: {
             basePath: '/',
             components: {
@@ -29,8 +29,7 @@ $(function () {
                 neat: {
                     className: 'Jii.comet.client.NeatClient',
                     engine: {
-                        className: 'NeatComet.NeatCometClient',
-                        profilesDefinition: require('./bindings.json').profiles
+                        className: 'NeatComet.NeatCometClient'
                     }
                 },
 
@@ -46,7 +45,7 @@ $(function () {
                 }
             }
         }
-    })).start();
+    }, window.JII_CONFIG)).start();
 
     var profile = Jii.app.neat.openProfile('test', {
         category: 'n',
@@ -67,10 +66,7 @@ $(function () {
                 .appendTo($('#demo-rows tbody'))
                 .on('click', 'a.btn-remove', function (e) {
                     e.preventDefault();
-
-                    Jii.app.comet.request('/demo/remove', {
-                        id: $(this).parents('tr').find('td:eq(0)').text()
-                    });
+                    model.delete();
                 });
         });
         Jii._.each(event.removed, function (model) {
@@ -87,15 +83,14 @@ $(function () {
     }
     randValues();
 
-
     form.on('submit', function (e) {
         e.preventDefault();
 
-        Jii.app.comet.request('/demo/add', {
+        new app.models.DemoRow({
             subject: form.find('[name=subject]').val(),
             category: form.find('[name=category]').val(),
             kind: form.find('[name=kind]').val()
-        });
+        }).save();
 
         randValues();
     });
