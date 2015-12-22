@@ -1,14 +1,13 @@
-'use strict';
+module.exports = require('jii');
 
-require('jii');
-
-// Load framework files
-require('./lib/client/plugin/AutoReconnect');
-require('./lib/client/plugin/PluginInterface');
-require('./lib/client/transport/TransportInterface');
-require('./lib/client/Client');
-require('./lib/client/LogMessageEvent');
-require('./lib/client/MessageEvent');
-require('./lib/client/RequestEvent');
-require('./lib/ChannelEvent');
-require('./lib/LogEvent');
+require('./lib/ChannelEvent.js');
+require('./lib/LogEvent.js');
+require('./lib/client/Client.js');
+require('./lib/client/LogMessageEvent.js');
+require('./lib/client/MessageEvent.js');
+require('./lib/client/NeatClient.js');
+require('./lib/client/RequestEvent.js');
+require('./lib/client/plugin/AutoReconnect.js');
+require('./lib/client/plugin/PluginInterface.js');
+require('./lib/client/transport/Sockjs.js');
+require('./lib/client/transport/TransportInterface.js');

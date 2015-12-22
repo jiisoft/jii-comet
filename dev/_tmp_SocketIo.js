@@ -17,7 +17,7 @@ var socketIo = require('socket.io');
  */
 Jii.defineClass('Jii.comet.server.transport.SocketIo', /** @lends Jii.comet.server.transport.SocketIo.prototype */{
 
-	__extends: Jii.comet.server.transport.TransportInterface,
+	__extends: 'Jii.comet.server.transport.TransportInterface',
 
 	/**
 	 * @param {Server} httpServer

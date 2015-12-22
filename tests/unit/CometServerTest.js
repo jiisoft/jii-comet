@@ -15,7 +15,7 @@ var app = Jii.namespace('app');
  */
 var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.CometServerTest.prototype */{
 
-	__extends: Jii.base.UnitTest,
+	__extends: 'Jii.base.UnitTest',
 
 	__static: {
 		SERVER_PORT: 3300
@@ -148,10 +148,10 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 
 			test.strictEqual(event.channel, Jii.comet.server.HubServer.CHANNEL_NAME_ACTION);
 			test.strictEqual(event.message, 'site/test');
-			test.strictEqual(incomeMessage, 'test1test');
+			test.strictEqual(incomeMessage, 'action "test1test"');
 
 			test.done();
-		}, 10);
+		}, 50);
 	},
 
 	pushActionViaHubTest: function(test) {
@@ -173,10 +173,10 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 		}));
 
 		setTimeout(function() {
-			test.strictEqual(incomeMessage, 'test2test');
+			test.strictEqual(incomeMessage, 'action "test2test"');
 
 			test.done();
-		}, 10);
+		}, 50);
 	},
 
 	_createConnection: function(handler) {
@@ -195,7 +195,7 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 
 Jii.defineClass('app.controllers.SiteController', {
 
-	__extends: Jii.base.Controller,
+	__extends: 'Jii.base.Controller',
 
 	actionTest: function(context) {
 		var response = context.getComponent('response');

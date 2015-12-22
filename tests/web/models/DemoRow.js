@@ -17,7 +17,7 @@ var Jii = require('jii');
  */
 Jii.defineClass('app.models.DemoRow', /** @lends app.models.DemoRow.prototype */{
 
-	__extends: Jii.sql.ActiveRecord,
+	__extends: 'Jii.sql.ActiveRecord',
 
 	__static: /** @lends Jii.comet.server.HubServer */{
 

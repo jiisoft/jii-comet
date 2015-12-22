@@ -11,7 +11,7 @@ var Jii = require('jii');
  */
 Jii.defineClass('app.controllers.SiteController', /** @lends app.controllers.SiteController.prototype */{
 
-	__extends: Jii.base.Controller,
+	__extends: 'Jii.base.Controller',
 
 	/**
 	 *

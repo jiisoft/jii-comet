@@ -64,6 +64,11 @@ $(function () {
                 '</tr>'
             )
                 .appendTo($('#demo-rows tbody'))
+                .on('change', 'input', function (e) {
+                    e.preventDefault();
+                    model.set('subject', $(this).val());
+                    model.save();
+                })
                 .on('click', 'a.btn-remove', function (e) {
                     e.preventDefault();
                     model.delete();
