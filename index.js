@@ -1,11 +1,14 @@
 module.exports = require('jii');
 
+// AUTO-GENERATED Package files list
 require('./lib/ChannelEvent.js');
+require('./lib/INeatContextProfiles.js');
 require('./lib/LogEvent.js');
 require('./lib/server/Connection.js');
 require('./lib/server/ConnectionEvent.js');
 require('./lib/server/HubServer.js');
 require('./lib/server/MessageEvent.js');
+require('./lib/server/NeatContextProfiles.js');
 require('./lib/server/NeatServer.js');
 require('./lib/server/Request.js');
 require('./lib/server/Response.js');
