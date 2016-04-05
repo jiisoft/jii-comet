@@ -12,5 +12,4 @@ require('./lib/client/NeatContextProfiles.js');
 require('./lib/client/RequestEvent.js');
 require('./lib/client/plugin/AutoReconnect.js');
 require('./lib/client/plugin/PluginInterface.js');
-require('./lib/client/transport/Sockjs.js');
 require('./lib/client/transport/TransportInterface.js');
