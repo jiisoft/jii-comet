@@ -1,6 +1,6 @@
 {
   "name": "jii-comet",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "Jii comet server & client",
   "main": "index.js",
   "browser": "index-client.js",
