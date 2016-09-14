@@ -1,2 +1,2 @@
 require('./index-client');
-require('./lib/client/NeatClient');
+require('./client/NeatClient');

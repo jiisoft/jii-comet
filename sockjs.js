@@ -1,2 +1,2 @@
 require('./index-client');
-require('./lib/client/transport/Sockjs');
+require('./client/transport/Sockjs');

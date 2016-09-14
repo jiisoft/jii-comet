@@ -1,15 +1,15 @@
 module.exports = require('jii');
 
 // AUTO-GENERATED Package files list
-require('./lib/ChannelEvent.js');
-require('./lib/INeatContextProfiles.js');
-require('./lib/LogEvent.js');
-require('./lib/client/Client.js');
-require('./lib/client/LogMessageEvent.js');
-require('./lib/client/MessageEvent.js');
-require('./lib/client/NeatClient.js');
-require('./lib/client/NeatContextProfiles.js');
-require('./lib/client/RequestEvent.js');
-require('./lib/client/plugin/AutoReconnect.js');
-require('./lib/client/plugin/PluginInterface.js');
-require('./lib/client/transport/TransportInterface.js');
+require('./ChannelEvent.js');
+require('./INeatContextProfiles.js');
+require('./LogEvent.js');
+require('./client/Client.js');
+require('./client/LogMessageEvent.js');
+require('./client/MessageEvent.js');
+require('./client/NeatClient.js');
+require('./client/NeatContextProfiles.js');
+require('./client/RequestEvent.js');
+require('./client/plugin/AutoReconnect.js');
+require('./client/plugin/PluginInterface.js');
+require('./client/transport/TransportInterface.js');
