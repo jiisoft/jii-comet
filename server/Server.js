@@ -6,6 +6,7 @@
 'use strict';
 
 var Jii = require('jii');
+var TransportInterface = require('./transport/TransportInterface');
 var _isEmpty = require('lodash/isEmpty');
 var _values = require('lodash/values');
 var _keys = require('lodash/keys');
@@ -76,10 +77,10 @@ module.exports = Jii.defineClass('Jii.comet.server.Server', /** @lends Jii.comet
 
 		// Init transport
 		this.transport = Jii.createObject(this.transport);
-		this.transport.on(Jii.comet.server.transport.TransportInterface.EVENT_ADD_CONNECTION, this._onAddConnection.bind(this));
-		this.transport.on(Jii.comet.server.transport.TransportInterface.EVENT_REMOVE_CONNECTION, this._onRemoveConnection.bind(this));
-		this.transport.on(Jii.comet.server.transport.TransportInterface.EVENT_MESSAGE, this._onClientMessage.bind(this));
-		this.transport.on(Jii.comet.server.transport.TransportInterface.EVENT_LOG, this._onLog.bind(this));
+		this.transport.on(TransportInterface.EVENT_ADD_CONNECTION, this._onAddConnection.bind(this));
+		this.transport.on(TransportInterface.EVENT_REMOVE_CONNECTION, this._onRemoveConnection.bind(this));
+		this.transport.on(TransportInterface.EVENT_MESSAGE, this._onClientMessage.bind(this));
+		this.transport.on(TransportInterface.EVENT_LOG, this._onLog.bind(this));
 		this.transport.bindEngine(this._httpServer);
 	},
 

@@ -6,6 +6,8 @@
 'use strict';
 
 var Jii = require('jii');
+var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
+var Collection = require('jii-model/base/Collection');
 var INeatContextProfiles = require('../INeatContextProfiles');
 
 /**
@@ -42,10 +44,10 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatContextProfiles', /** @le
         /** @typedef {NeatComet.bindings.BindingServer} bingind */
         var binding = this.neat.engine.profileBindings[name] && this.neat.engine.profileBindings[name][name] || null;
         if (!binding) {
-            throw new Jii.exceptions.InvalidConfigException('Not found collection for profile id `' + name + '`');
+            throw new InvalidConfigException('Not found collection for profile id `' + name + '`');
         }
 
-        var collection = new Jii.base.Collection([], {
+        var collection = new Collection([], {
             modelClass: binding.serverModel || binding.clientModel
         });
         return new Promise(resolve => {

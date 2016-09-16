@@ -6,6 +6,11 @@
 'use strict';
 
 var Jii = require('jii');
+var String = require('jii/helpers/String');
+var TransportInterface = require('./transport/TransportInterface');
+var RequestEvent = require('./RequestEvent');
+var MessageEvent = require('./MessageEvent');
+var ChannelEvent = require('../ChannelEvent');
 var _indexOf = require('lodash/indexOf');
 var _each = require('lodash/each');
 var Component = require('jii/base/Component');
@@ -139,13 +144,13 @@ module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet
 	_subscribes: [],
 
 	init() {
-		stationUid = Jii.helpers.String.generateUid();
+		stationUid = String.generateUid();
 
 		// Init transport
 		this.transport = Jii.createObject(this.transport);
-		this.transport.on(Jii.comet.client.transport.TransportInterface.EVENT_OPEN, this._onOpen.bind(this));
-		this.transport.on(Jii.comet.client.transport.TransportInterface.EVENT_CLOSE, this._onClose.bind(this));
-		this.transport.on(Jii.comet.client.transport.TransportInterface.EVENT_MESSAGE, this._onMessage.bind(this));
+		this.transport.on(TransportInterface.EVENT_OPEN, this._onOpen.bind(this));
+		this.transport.on(TransportInterface.EVENT_CLOSE, this._onClose.bind(this));
+		this.transport.on(TransportInterface.EVENT_MESSAGE, this._onMessage.bind(this));
 
 		// Init plugins
 		_each(this.plugins, (config, name) => {
@@ -329,10 +334,10 @@ module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet
 	 */
 	request(route, data) {
 		data = data || {};
-		data.requestUid = Jii.helpers.String.generateUid();
+		data.requestUid = String.generateUid();
 
 		// Trigger event for append data
-		var event = new Jii.comet.client.RequestEvent({
+		var event = new RequestEvent({
 			route: route,
 			params: data
 		});
@@ -360,7 +365,7 @@ module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet
 	 */
 	_sendInternal(message) {
 		// Trigger event before send message
-		var event = new Jii.comet.client.MessageEvent({
+		var event = new MessageEvent({
 			message: message
 		});
 		this.trigger(this.__static.EVENT_BEFORE_SEND, event);
@@ -399,7 +404,7 @@ module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet
 				this._requestsInProcess[response.requestUid].resolve(response);
 
 				// Trigger request event
-				this.trigger(this.__static.EVENT_REQUEST, new Jii.comet.client.RequestEvent({
+				this.trigger(this.__static.EVENT_REQUEST, new RequestEvent({
 					route: this._requestsInProcess[response.requestUid].route,
 					params: response
 				}));
@@ -414,7 +419,7 @@ module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet
 			var messageString = message.substr(i + 1);
 			var params = messageString.match(/^[\{\[]/) ? JSON.parse(messageString) : null;
 
-			var channelEvent = new Jii.comet.ChannelEvent({
+			var channelEvent = new ChannelEvent({
 				channel: message.substr(0, i),
 				params: params,
 				message: !params ? messageString : null
@@ -426,7 +431,7 @@ module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet
 		}
 
 		// Trigger message event
-		this.trigger(this.__static.EVENT_MESSAGE, new Jii.comet.client.MessageEvent({
+		this.trigger(this.__static.EVENT_MESSAGE, new MessageEvent({
 			message: event.message
 		}));
 	}

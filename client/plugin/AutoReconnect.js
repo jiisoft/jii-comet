@@ -2,6 +2,8 @@
 'use strict';
 
 var Jii = require('jii');
+var Client = require('../Client');
+var TransportInterface = require('../transport/TransportInterface');
 var PluginInterface = require('./PluginInterface');
 
 /**
@@ -35,8 +37,8 @@ module.exports = Jii.defineClass('Jii.comet.client.plugin.AutoReconnect', /** @l
 	_tryReconnectNumber: 0,
 
 	init() {
-		this.comet.on(Jii.comet.client.Client.EVENT_OPEN, this._onOpen.bind(this));
-		this.comet.transport.on(Jii.comet.client.transport.TransportInterface.EVENT_CLOSE, this._onClose.bind(this));
+		this.comet.on(Client.EVENT_OPEN, this._onOpen.bind(this));
+		this.comet.transport.on(TransportInterface.EVENT_CLOSE, this._onClose.bind(this));
 	},
 
 	_onOpen() {

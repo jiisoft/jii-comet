@@ -6,6 +6,12 @@
 'use strict';
 
 var Jii = require('jii');
+var String = require('jii/helpers/String');
+var HubInterface = require('./hub/HubInterface');
+var ChannelEvent = require('../ChannelEvent');
+var Request = require('./Request');
+var Connection = require('./Connection');
+var Response = require('./Response');
 var _extend = require('lodash/extend');
 var Component = require('jii/base/Component');
 
@@ -82,11 +88,11 @@ module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.co
 		this.__super();
 
 		// Generate unique server uid
-		this._serverUid = Jii.helpers.String.generateUid();
+		this._serverUid = String.generateUid();
 
 		// Init hub
 		this.hub = Jii.createObject(this.hub);
-		this.hub.on(Jii.comet.server.hub.HubInterface.EVENT_MESSAGE, this._onHubMessage.bind(this));
+		this.hub.on(HubInterface.EVENT_MESSAGE, this._onHubMessage.bind(this));
 
 		// Init queue
 		this.queue = Jii.createObject(this.queue);
@@ -226,7 +232,7 @@ module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.co
 	_onHubMessage(event) {
 		Jii.trace('Comet hub income, channel `' + event.channel + '`: ' + event.message);
 
-		this.trigger(this.__static.EVENT_MESSAGE, new Jii.comet.ChannelEvent({
+		this.trigger(this.__static.EVENT_MESSAGE, new ChannelEvent({
 			channel: event.channel,
 			message: event.message
 		}));
@@ -242,14 +248,14 @@ module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.co
 
 			case this.__static.CHANNEL_NAME_ALL:
 				var i2 = event.message.indexOf(' ');
-				this.trigger(this.__static.EVENT_CHANNEL, new Jii.comet.ChannelEvent({
+				this.trigger(this.__static.EVENT_CHANNEL, new ChannelEvent({
 					channel: event.message.substr(0, i2),
 					message: event.message.substr(i2 + 1)
 				}));
 				break;
 
 			default:
-				this.trigger(this.__static.EVENT_CHANNEL_NAME + event.channel, new Jii.comet.ChannelEvent({
+				this.trigger(this.__static.EVENT_CHANNEL_NAME + event.channel, new ChannelEvent({
 					channel: event.channel,
 					message: event.message
 				}));
@@ -271,11 +277,11 @@ module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.co
 
                 data.request.uid = data.request.queryParams ? data.request.queryParams.requestUid : null;
 
-                context.setComponent('request', new Jii.comet.server.Request(data.request));
-                context.setComponent('connection', new Jii.comet.server.Connection(_extend({}, data.connection, {
+                context.setComponent('request', new Request(data.request));
+                context.setComponent('connection', new Connection(_extend({}, data.connection, {
                     request: context.get('request')
                 })));
-                context.setComponent('response', new Jii.comet.server.Response({
+                context.setComponent('response', new Response({
                     comet: this,
                     requestUid: data.request.uid,
                     connectionId: context.get('connection').id

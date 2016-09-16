@@ -1,6 +1,11 @@
 'use strict';
 
 var Jii = require('jii');
+var LogEvent = require('../../LogEvent');
+var Connection = require('../Connection');
+var Request = require('../Request');
+var MessageEvent = require('../MessageEvent');
+var ConnectionEvent = require('../ConnectionEvent');
 var TransportInterface = require('./TransportInterface');
 var SockJS = require('sockjs');
 
@@ -31,7 +36,7 @@ module.exports = Jii.defineClass('Jii.comet.server.transport.SockJs', /** @lends
 
 		this._server = SockJS.createServer({
 			log : (severity, message) => {
-				this.trigger(this.__static.EVENT_LOG, new Jii.comet.LogEvent({
+				this.trigger(this.__static.EVENT_LOG, new LogEvent({
 					level: this.__static.LOG_LEVEL_MAPPING[severity] || 'debug',
 					message: message
 				}));
@@ -70,10 +75,10 @@ module.exports = Jii.defineClass('Jii.comet.server.transport.SockJs', /** @lends
 	},
 
 	_addConnection(originalConnection) {
-		var connection = new Jii.comet.server.Connection({
+		var connection = new Connection({
 			id: originalConnection.id,
 			originalConnection: originalConnection,
-			request: new Jii.comet.server.Request({
+			request: new Request({
 				headers: originalConnection.headers,
 				ip: originalConnection.ip,
 				port: originalConnection.remotePort
@@ -82,7 +87,7 @@ module.exports = Jii.defineClass('Jii.comet.server.transport.SockJs', /** @lends
 
 		// Trigger on incoming message
         originalConnection.on('data', message => {
-			this.trigger(this.__static.EVENT_MESSAGE, new Jii.comet.server.MessageEvent({
+			this.trigger(this.__static.EVENT_MESSAGE, new MessageEvent({
 				connection: connection,
 				message: message
 			}));
@@ -90,13 +95,13 @@ module.exports = Jii.defineClass('Jii.comet.server.transport.SockJs', /** @lends
 
 		// Trigger remove connection on close
         originalConnection.on('close', () => {
-			this.trigger(this.__static.EVENT_REMOVE_CONNECTION, new Jii.comet.server.ConnectionEvent({
+			this.trigger(this.__static.EVENT_REMOVE_CONNECTION, new ConnectionEvent({
 				connection: connection
 			}));
 		});
 
 		// Trigger add new connection
-		this.trigger(this.__static.EVENT_ADD_CONNECTION, new Jii.comet.server.ConnectionEvent({
+		this.trigger(this.__static.EVENT_ADD_CONNECTION, new ConnectionEvent({
 			connection: connection
 		}));
 	}

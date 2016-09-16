@@ -6,6 +6,11 @@
 'use strict';
 
 var Jii = require('jii');
+var Server = require('./Server');
+var Component = require('jii/base/Component');
+var Event = require('jii/base/Event');
+var ActiveRecord = require('jii-model/base/ActiveRecord');
+var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
 var _isEmpty = require('lodash/isEmpty');
 var _extend = require('lodash/extend');
@@ -86,7 +91,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         this.comet = this.comet === null ?
             Jii.app.get('comet') :
             (
-                this.comet instanceof Jii.base.Component ?
+                this.comet instanceof Component ?
                     this.comet :
                     Jii.createObject(this.comet)
             );
@@ -102,10 +107,10 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         Jii.app.inlineActions['neat/open'] = this._actionOpenProfile.bind(this);
         Jii.app.inlineActions['neat/close'] = this._actionCloseProfile.bind(this);
 
-        if (this.listenModels && Jii.base.ActiveRecord) {
-            Jii.base.Event.on(Jii.base.ActiveRecord.className(), Jii.base.ActiveRecord.EVENT_AFTER_INSERT, this._onModelInsert.bind(this));
-            Jii.base.Event.on(Jii.base.ActiveRecord.className(), Jii.base.ActiveRecord.EVENT_AFTER_UPDATE, this._onModelUpdate.bind(this));
-            Jii.base.Event.on(Jii.base.ActiveRecord.className(), Jii.base.ActiveRecord.EVENT_AFTER_DELETE, this._onModelDelete.bind(this));
+        if (this.listenModels && ActiveRecord) {
+            Event.on(ActiveRecord.className(), ActiveRecord.EVENT_AFTER_INSERT, this._onModelInsert.bind(this));
+            Event.on(ActiveRecord.className(), ActiveRecord.EVENT_AFTER_UPDATE, this._onModelUpdate.bind(this));
+            Event.on(ActiveRecord.className(), ActiveRecord.EVENT_AFTER_DELETE, this._onModelDelete.bind(this));
         }
     },
 
@@ -116,10 +121,10 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     bindServerEvents(eventsHandler) {
         this._events = eventsHandler;
 
-        this.comet.on(Jii.comet.server.Server.EVENT_ADD_CONNECTION, event => {
+        this.comet.on(Server.EVENT_ADD_CONNECTION, event => {
             eventsHandler.onNewConnection(event.connection.id);
         });
-        this.comet.on(Jii.comet.server.Server.EVENT_REMOVE_CONNECTION, event => {
+        this.comet.on(Server.EVENT_REMOVE_CONNECTION, event => {
             eventsHandler.onLostConnection(event.connection.id);
         });
     },
@@ -194,7 +199,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         /** @typedef {Jii.sql.ActiveRecord} modelClass  */
         var modelClass = Jii.namespace(modelClassName);
         if (!_isFunction(modelClass)) {
-            throw new Jii.exceptions.InvalidConfigException('Not found model `' + modelClassName + '` for binding');
+            throw new InvalidConfigException('Not found model `' + modelClassName + '` for binding');
         }
 
         /** @typedef {Jii.sql.ActiveQuery} query  */
@@ -224,7 +229,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
                 break;
 
             default:
-                throw new Jii.exceptions.InvalidConfigException('Where type `' + whereType + '` is not implemented');
+                throw new InvalidConfigException('Where type `' + whereType + '` is not implemented');
         }
 
         // Query via model implementation
@@ -245,7 +250,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
      * @private
      */
     _onModelInsert(event) {
-        /** @typedef {Jii.base.ActiveRecord} model */
+        /** @typedef {ActiveRecord} model */
         var model = event.sender;
 
         this.engine.broadcastEvent(model.className(), 'sendAdd', model.getAttributes());
@@ -254,11 +259,11 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     /**
      *
      * @param {Jii.sql.AfterSaveEvent} event
-     * @param {Jii.base.ActiveRecord} event.sender
+     * @param {ActiveRecord} event.sender
      * @private
      */
     _onModelUpdate(event) {
-        /** @typedef {Jii.base.ActiveRecord} model */
+        /** @typedef {ActiveRecord} model */
         var model = event.sender;
 
         var oldAttributes = _extend({}, event.changedAttributes, model.getOldAttributes());
@@ -268,11 +273,11 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     /**
      *
      * @param {Jii.base.Event} event
-     * @param {Jii.base.ActiveRecord} event.sender
+     * @param {ActiveRecord} event.sender
      * @private
      */
     _onModelDelete(event) {
-        /** @typedef {Jii.base.ActiveRecord} model */
+        /** @typedef {ActiveRecord} model */
         var model = event.sender;
 
         this.engine.broadcastEvent(model.className(), 'sendRemove', model.getAttributes());

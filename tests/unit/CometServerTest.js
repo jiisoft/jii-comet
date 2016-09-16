@@ -5,6 +5,15 @@
  * @ignore
  */
 var Jii = require('../../index');
+var Server = require('../../server/Server');
+var HubServer = require('../../server/HubServer');
+var TransportInterface = require('../../server/transport/TransportInterface');
+var String = require('jii/helpers/String');
+var ConnectionEvent = require('../../server/ConnectionEvent');
+var MessageEvent = require('../../server/MessageEvent');
+var Connection = require('../../server/Connection');
+var Request = require('../../server/Request');
+var HubInterface = require('../../server/hub/HubInterface');
 require('./bootstrap');
 
 var app = Jii.namespace('app');
@@ -24,11 +33,11 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 	init: function() {
 		Jii.app.setComponents({
 			comet: {
-				className: 'Jii.comet.server.Server',
+				className: Server,
 				port: this.__static.SERVER_PORT
 			},
 			cometListener: {
-				className: 'Jii.comet.server.HubServer'
+				className: HubServer
 			}
 		});
 	},
@@ -52,35 +61,35 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 	subscribeTest: function (test) {
 		/** @typedef {Jii.comet.ChannelEvent} event */
 		var event = null;
-		Jii.app.comet.on(Jii.comet.server.Server.EVENT_CHANNEL, function(e) {
+		Jii.app.comet.on(Server.EVENT_CHANNEL, function(e) {
 			event = e;
 		});
 
 		/** @typedef {Jii.comet.ChannelEvent} event */
 		var event2 = null;
-		Jii.app.comet.on(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'test', function(e) {
+		Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'test', function(e) {
 			event2 = e;
 		});
 
 		/** @typedef {Jii.comet.ChannelEvent} event */
 		var event3 = null;
-		Jii.app.comet.on(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'blabla', function(e) {
+		Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'blabla', function(e) {
 			event3 = e;
 		});
 
 		/** @typedef {Jii.comet.ChannelEvent} event */
 		var hubEvent = null;
-		Jii.app.comet.hub.on(Jii.comet.server.hub.HubInterface.EVENT_MESSAGE, function(e) {
+		Jii.app.comet.hub.on(HubInterface.EVENT_MESSAGE, function(e) {
 			hubEvent = e;
 		});
 
 		setTimeout(function() {
 			Jii.app.comet.sendToChannel('test', {foo: 588});
 
-			test.strictEqual(true, Jii.app.comet.hasEventHandlers(Jii.comet.server.Server.EVENT_CHANNEL));
-			test.strictEqual(true, Jii.app.comet.hasEventHandlers(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'test'));
-			test.strictEqual(true, Jii.app.comet.hasEventHandlers(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'blabla'));
-			test.strictEqual(false, Jii.app.comet.hasEventHandlers(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'qweqwe'));
+			test.strictEqual(true, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL));
+			test.strictEqual(true, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL_NAME + 'test'));
+			test.strictEqual(true, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL_NAME + 'blabla'));
+			test.strictEqual(false, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL_NAME + 'qweqwe'));
 
 			setTimeout(function() {
 				test.strictEqual(event.channel, 'test');
@@ -99,12 +108,12 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 				event = null;
 				event2 = null;
 				hubEvent = null;
-				Jii.app.comet.off(Jii.comet.server.Server.EVENT_CHANNEL);
-				Jii.app.comet.off(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'test');
+				Jii.app.comet.off(Server.EVENT_CHANNEL);
+				Jii.app.comet.off(Server.EVENT_CHANNEL_NAME + 'test');
 
-				test.strictEqual(false, Jii.app.comet.hasEventHandlers(Jii.comet.server.Server.EVENT_CHANNEL));
-				test.strictEqual(false, Jii.app.comet.hasEventHandlers(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'test'));
-				test.strictEqual(true, Jii.app.comet.hasEventHandlers(Jii.comet.server.Server.EVENT_CHANNEL_NAME + 'blabla'));
+				test.strictEqual(false, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL));
+				test.strictEqual(false, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL_NAME + 'test'));
+				test.strictEqual(true, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL_NAME + 'blabla'));
 
 				Jii.app.comet.sendToChannel('test', {foo: 444});
 
@@ -120,25 +129,25 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 	},
 
 	pushActionToSelfTest: function(test) {
-		Jii.app.comet.hub.subscribe(Jii.comet.server.HubServer.CHANNEL_NAME_ACTION);
-		Jii.app.cometListener.hub.unsubscribe(Jii.comet.server.HubServer.CHANNEL_NAME_ACTION);
+		Jii.app.comet.hub.subscribe(HubServer.CHANNEL_NAME_ACTION);
+		Jii.app.cometListener.hub.unsubscribe(HubServer.CHANNEL_NAME_ACTION);
 
 		var incomeMessage = null;
 		var connection = this._createConnection(function(m) { incomeMessage = m });
 
 		// Subscribe
 		var event = null;
-		Jii.app.comet.on(Jii.comet.server.HubServer.EVENT_MESSAGE, function(e) {
+		Jii.app.comet.on(HubServer.EVENT_MESSAGE, function(e) {
 			event = e;
 		});
 
 		// Client connect
-		Jii.app.comet.transport.trigger(Jii.comet.server.transport.TransportInterface.EVENT_ADD_CONNECTION, new Jii.comet.server.ConnectionEvent({
+		Jii.app.comet.transport.trigger(TransportInterface.EVENT_ADD_CONNECTION, new ConnectionEvent({
 			connection: connection
 		}));
 
 		// Client send command for run action
-		Jii.app.comet.transport.trigger(Jii.comet.server.transport.TransportInterface.EVENT_MESSAGE, new Jii.comet.server.MessageEvent({
+		Jii.app.comet.transport.trigger(TransportInterface.EVENT_MESSAGE, new MessageEvent({
 			connection: connection,
 			message: 'action site/test'
 		}));
@@ -146,7 +155,7 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 		setTimeout(function() {
 			test.notStrictEqual(event, null);
 
-			test.strictEqual(event.channel, Jii.comet.server.HubServer.CHANNEL_NAME_ACTION);
+			test.strictEqual(event.channel, HubServer.CHANNEL_NAME_ACTION);
 			test.strictEqual(event.message, 'site/test');
 			test.strictEqual(incomeMessage, 'action "test1test"');
 
@@ -155,19 +164,19 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 	},
 
 	pushActionViaHubTest: function(test) {
-		Jii.app.comet.hub.unsubscribe(Jii.comet.server.HubServer.CHANNEL_NAME_ACTION);
-		Jii.app.cometListener.hub.subscribe(Jii.comet.server.HubServer.CHANNEL_NAME_ACTION);
+		Jii.app.comet.hub.unsubscribe(HubServer.CHANNEL_NAME_ACTION);
+		Jii.app.cometListener.hub.subscribe(HubServer.CHANNEL_NAME_ACTION);
 
 		var incomeMessage = null;
 		var connection = this._createConnection(function(m) { incomeMessage = m });
 
 		// Client connect
-		Jii.app.comet.transport.trigger(Jii.comet.server.transport.TransportInterface.EVENT_ADD_CONNECTION, new Jii.comet.server.ConnectionEvent({
+		Jii.app.comet.transport.trigger(TransportInterface.EVENT_ADD_CONNECTION, new ConnectionEvent({
 			connection: connection
 		}));
 
 		// Client send command for run action
-		Jii.app.comet.transport.trigger(Jii.comet.server.transport.TransportInterface.EVENT_MESSAGE, new Jii.comet.server.MessageEvent({
+		Jii.app.comet.transport.trigger(TransportInterface.EVENT_MESSAGE, new MessageEvent({
 			connection: connection,
 			message: 'action site/test2'
 		}));
@@ -180,10 +189,10 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 	},
 
 	_createConnection: function(handler) {
-		return new Jii.comet.server.Connection({
-			id: Jii.helpers.String.generateUid(),
+		return new Connection({
+			id: String.generateUid(),
 			originalConnection: { write: handler, destroy: function() {} },
-			request: new Jii.comet.server.Request({
+			request: new Request({
 				headers: {},
 				ip: '127.0.0.1',
 				port: Jii.app.comet.port

@@ -2,8 +2,9 @@
 'use strict';
 
 var Jii = require('jii');
+var ChannelEvent = require('../../ChannelEvent');
 var HubInterface = require('./HubInterface');
-var redis = require("redis")
+var redis = require("redis");
 
 /**
  * @class Jii.comet.server.hub.Redis
@@ -135,7 +136,7 @@ module.exports = Jii.defineClass('Jii.comet.server.hub.Redis', /** @lends Jii.co
 	},
 
 	_onHubMessage(channel, message) {
-		this.trigger(this.__static.EVENT_MESSAGE, new Jii.comet.ChannelEvent({
+		this.trigger(this.__static.EVENT_MESSAGE, new ChannelEvent({
 			channel: channel,
 			message: message
 		}));

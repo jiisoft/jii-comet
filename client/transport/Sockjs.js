@@ -18,6 +18,8 @@ if (typeof global !== 'undefined' && typeof window !== 'undefined' && global !==
 // @todo jsonp callbacks
 
 var SockJS = require('sockjs-client');
+var Event = require('jii/base/Event');
+var MessageEvent = require('../MessageEvent');
 var TransportInterface = require('./TransportInterface');
 
 /**
@@ -83,16 +85,16 @@ module.exports = Jii.defineClass('Jii.comet.client.transport.Sockjs', /** @lends
 	},
 
 	_onOpen() {
-		this.trigger(this.__static.EVENT_OPEN, new Jii.base.Event());
+		this.trigger(this.__static.EVENT_OPEN, new Event());
 	},
 
 	_onClose(errorEvent) {
-		this.trigger(this.__static.EVENT_CLOSE, new Jii.base.Event());
+		this.trigger(this.__static.EVENT_CLOSE, new Event());
 	},
 
 	_onMessage(event) {
 		if (event.type === 'message') {
-			this.trigger(this.__static.EVENT_MESSAGE, new Jii.comet.client.MessageEvent({
+			this.trigger(this.__static.EVENT_MESSAGE, new MessageEvent({
 				message: event.data
 			}));
 		}

@@ -6,6 +6,10 @@
 'use strict';
 
 var Jii = require('jii');
+var Client = require('./Client');
+var ActiveRecord = require('jii-model/base/ActiveRecord');
+var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
+var Collection = require('jii-model/base/Collection');
 var _isFunction = require('lodash/isFunction');
 var _toArray = require('lodash/toArray');
 var _extend = require('lodash/extend');
@@ -52,7 +56,7 @@ module.exports = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
         this.comet = this.comet === null ?
             Jii.app.get('comet') :
             (
-                this.comet instanceof Jii.base.Component ?
+                this.comet instanceof Component ?
                     this.comet :
                     Jii.createObject(this.comet)
             );
@@ -82,7 +86,7 @@ module.exports = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
      * @param {NeatComet.api.ICometClientEvents} eventsHandler
      */
     bindEvents(eventsHandler) {
-        this.comet.on(Jii.comet.client.Client.EVENT_CHANNEL, event => {
+        this.comet.on(Client.EVENT_CHANNEL, event => {
             if (event.channel.indexOf(this.__static.ROUTE_PREFIX) === 0) {
                 eventsHandler.onMessage(event.channel.substr(this.__static.ROUTE_PREFIX.length), event.params);
             }
@@ -113,11 +117,11 @@ module.exports = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
     },
 
     _createCollection(profileId, bindingId, definition, openedProfile) {
-        var modelClassName = definition.clientModel || definition.serverModel || Jii.base.ActiveRecord;
+        var modelClassName = definition.clientModel || definition.serverModel || ActiveRecord;
         var modelClass = Jii.namespace(modelClassName);
 
         if (!_isFunction(modelClass)) {
-            throw new Jii.exceptions.InvalidConfigException('Not found model class by name, modelClass: ' + modelClassName);
+            throw new InvalidConfigException('Not found model class by name, modelClass: ' + modelClassName);
         }
 
         if (modelClass.getDb && modelClass.getDb()) {
@@ -127,7 +131,7 @@ module.exports = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
             }
         }
 
-        return new Jii.base.Collection([], {
+        return new Collection([], {
             modelClass: modelClass
         });
     },
@@ -143,7 +147,7 @@ module.exports = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
     _callCollection(collection, method, param1, param2) {
         var model;
 
-        if (collection instanceof Jii.base.Collection) {
+        if (collection instanceof Collection) {
             switch (method) {
                 case 'add':
                     model = collection.createModel(param1);
