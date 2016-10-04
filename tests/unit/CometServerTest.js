@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * @namespace Jii
- * @ignore
- */
 var Jii = require('../../index');
 var Server = require('../../server/Server');
 var HubServer = require('../../server/HubServer');
@@ -14,17 +10,17 @@ var MessageEvent = require('../../server/MessageEvent');
 var Connection = require('../../server/Connection');
 var Request = require('../../server/Request');
 var HubInterface = require('../../server/hub/HubInterface');
-require('./bootstrap');
+var UnitTest = require('jii/server/base/UnitTest');
 
-var app = Jii.namespace('app');
+require('./bootstrap');
 
 /**
  * @class tests.unit.CometServerTest
  * @extends Jii.base.UnitTest
  */
-var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.CometServerTest.prototype */{
+var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.CometServerTest.prototype */{
 
-	__extends: 'Jii.base.UnitTest',
+	__extends: UnitTest,
 
 	__static: {
 		SERVER_PORT: 3300
@@ -34,7 +30,10 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 		Jii.app.setComponents({
 			comet: {
 				className: Server,
-				port: this.__static.SERVER_PORT
+				port: this.__static.SERVER_PORT,
+				transport: {
+					className: require('jii-comet/server/transport/Sockjs')
+				}
 			},
 			cometListener: {
 				className: HubServer
@@ -202,24 +201,4 @@ var self = Jii.defineClass('tests.unit.CometServerTest', /** @lends tests.unit.C
 
 });
 
-Jii.defineClass('app.controllers.SiteController', {
-
-	__extends: 'Jii.base.Controller',
-
-	actionTest: function(context) {
-		var response = context.getComponent('response');
-
-		response.data = 'test1test';
-		response.send();
-	},
-
-	actionTest2: function(context) {
-		var response = context.getComponent('response');
-
-		response.data = 'test2test';
-		response.send();
-	}
-
-});
-
-module.exports = new self().exports();
+module.exports = new CometServerTest().exports();

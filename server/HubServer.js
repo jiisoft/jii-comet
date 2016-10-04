@@ -14,6 +14,8 @@ var Connection = require('./Connection');
 var Response = require('./Response');
 var _extend = require('lodash/extend');
 var Component = require('jii/base/Component');
+var RedisHub = require('./hub/Redis');
+var RedisQueue = require('./queue/Redis');
 
 /**
  * @class Jii.comet.server.HubServer
@@ -69,14 +71,14 @@ module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.co
 	 * @type {Jii.comet.server.hub.HubInterface}
 	 */
 	hub: {
-		className: 'Jii.comet.server.hub.Redis'
+		className: RedisHub
 	},
 
 	/**
 	 * @type {Jii.comet.server.queue.QueueInterface}
 	 */
 	queue: {
-		className: 'Jii.comet.server.queue.Redis'
+		className: RedisQueue
 	},
 
 	/**

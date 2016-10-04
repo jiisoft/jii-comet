@@ -1,13 +1,33 @@
 'use strict';
 
-/**
- * @namespace Jii
- * @ignore
- */
-var Jii = require('../../index');
+var Jii = require('jii');
+var Controller = require('jii/base/Controller');
+
+var SiteController = Jii.defineClass('app.controllers.SiteController', {
+
+	__extends: Controller,
+
+	actionTest: function(context) {
+		var response = context.getComponent('response');
+
+		response.data = 'test1test';
+		response.send();
+	},
+
+	actionTest2: function(context) {
+		var response = context.getComponent('response');
+
+		response.data = 'test2test';
+		response.send();
+	}
+
+});
 
 Jii.createWebApplication({
 	application: {
-		basePath: __dirname
+		basePath: __dirname,
+		controllerMap: {
+			SiteController: SiteController
+		}
 	}
 });

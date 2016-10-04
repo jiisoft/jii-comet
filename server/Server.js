@@ -50,9 +50,7 @@ module.exports = Jii.defineClass('Jii.comet.server.Server', /** @lends Jii.comet
 	/**
 	 * @type {Jii.comet.server.transport.TransportInterface}
 	 */
-	transport: {
-		className: 'Jii.comet.server.transport.SockJs'
-	},
+	transport: null,
 
 	/**
 	 * @type {Server}
