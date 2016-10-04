@@ -186,7 +186,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     },
 
     /**
-     * @param {string|Jii.sql.ActiveQuery} modelClassName
+     * @param {string|Jii.base.ActiveQuery} modelClassName
      * @param {object|null} match
      * @param {string} whereType
      * @param {string|null} where
@@ -196,13 +196,13 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
      */
     loadRecords(modelClassName, match, whereType, where, attributes, binding) {
 
-        /** @typedef {Jii.sql.ActiveRecord} modelClass  */
+        /** @typedef {Jii.base.ActiveRecord} modelClass  */
         var modelClass = Jii.namespace(modelClassName);
         if (!_isFunction(modelClass)) {
             throw new InvalidConfigException('Not found model `' + modelClassName + '` for binding');
         }
 
-        /** @typedef {Jii.sql.ActiveQuery} query  */
+        /** @typedef {Jii.base.ActiveQuery} query  */
         var query = modelClass.find();
 
         // Apply match condition
@@ -245,7 +245,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
 
     /**
      *
-     * @param {Jii.sql.AfterSaveEvent} event
+     * @param {Jii.model.AfterSaveEvent} event
      * @param {} event.sender
      * @private
      */
@@ -258,7 +258,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
 
     /**
      *
-     * @param {Jii.sql.AfterSaveEvent} event
+     * @param {Jii.model.AfterSaveEvent} event
      * @param {ActiveRecord} event.sender
      * @private
      */
