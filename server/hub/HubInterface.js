@@ -8,7 +8,7 @@ var Component = require('jii/base/Component');
  * @class Jii.comet.server.hub.HubInterface
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.comet.server.hub.HubInterface', /** @lends Jii.comet.server.hub.HubInterface.prototype */{
+var HubInterface = Jii.defineClass('Jii.comet.server.hub.HubInterface', /** @lends Jii.comet.server.hub.HubInterface.prototype */{
 
 	__extends: Component,
 
@@ -63,3 +63,5 @@ module.exports = Jii.defineClass('Jii.comet.server.hub.HubInterface', /** @lends
 
 
 });
+
+module.exports = HubInterface;

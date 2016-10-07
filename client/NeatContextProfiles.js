@@ -15,7 +15,7 @@ var INeatContextProfiles = require('../INeatContextProfiles');
  * @class Jii.comet.client.NeatContextProfiles
  * @extends Jii.comet.INeatContextProfiles
  */
-module.exports = Jii.defineClass('Jii.comet.client.NeatContextProfiles', /** @lends Jii.comet.client.NeatContextProfiles.prototype */{
+var NeatContextProfiles = Jii.defineClass('Jii.comet.client.NeatContextProfiles', /** @lends Jii.comet.client.NeatContextProfiles.prototype */{
 
     __extends: INeatContextProfiles,
 
@@ -75,3 +75,5 @@ module.exports = Jii.defineClass('Jii.comet.client.NeatContextProfiles', /** @le
     }
 
 });
+
+module.exports = NeatContextProfiles;

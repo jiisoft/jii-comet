@@ -10,7 +10,7 @@ var redis = require("redis");
  * @class Jii.comet.server.hub.Redis
  * @extends Jii.comet.server.hub.HubInterface
  */
-module.exports = Jii.defineClass('Jii.comet.server.hub.Redis', /** @lends Jii.comet.server.hub.Redis.prototype */{
+var Redis = Jii.defineClass('Jii.comet.server.hub.Redis', /** @lends Jii.comet.server.hub.Redis.prototype */{
 
 	__extends: HubInterface,
 
@@ -143,3 +143,5 @@ module.exports = Jii.defineClass('Jii.comet.server.hub.Redis', /** @lends Jii.co
 	}
 
 });
+
+module.exports = Redis;

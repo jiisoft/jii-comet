@@ -12,7 +12,7 @@ var Object = require('jii/base/Object');
  * @class Jii.comet.INeatContextProfiles
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.comet.INeatContextProfiles', /** @lends Jii.comet.INeatContextProfiles.prototype */{
+var INeatContextProfiles = Jii.defineClass('Jii.comet.INeatContextProfiles', /** @lends Jii.comet.INeatContextProfiles.prototype */{
 
     __extends: Object,
 
@@ -26,3 +26,5 @@ module.exports = Jii.defineClass('Jii.comet.INeatContextProfiles', /** @lends Ji
     }
 
 });
+
+module.exports = INeatContextProfiles;

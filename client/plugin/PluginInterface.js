@@ -8,7 +8,7 @@ var Object = require('jii/base/Object');
  * @class Jii.comet.client.plugin.PluginInterface
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.comet.client.plugin.PluginInterface', /** @lends Jii.comet.client.plugin.PluginInterface.prototype */{
+var PluginInterface = Jii.defineClass('Jii.comet.client.plugin.PluginInterface', /** @lends Jii.comet.client.plugin.PluginInterface.prototype */{
 
 	__extends: Object,
 
@@ -18,3 +18,5 @@ module.exports = Jii.defineClass('Jii.comet.client.plugin.PluginInterface', /** 
 	comet: null
 
 });
+
+module.exports = PluginInterface;

@@ -13,7 +13,7 @@ var SockJS = require('sockjs');
  * @class Jii.comet.server.transport.SockJs
  * @extends Jii.comet.server.transport.TransportInterface
  */
-module.exports = Jii.defineClass('Jii.comet.server.transport.SockJs', /** @lends Jii.comet.server.transport.SockJs.prototype */{
+var SockJs = Jii.defineClass('Jii.comet.server.transport.SockJs', /** @lends Jii.comet.server.transport.SockJs.prototype */{
 
 	__extends: TransportInterface,
 
@@ -107,3 +107,5 @@ module.exports = Jii.defineClass('Jii.comet.server.transport.SockJs', /** @lends
 	}
 
 });
+
+module.exports = SockJs;

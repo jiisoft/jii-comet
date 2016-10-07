@@ -12,7 +12,7 @@ var Event = require('jii/base/Event');
  * @class Jii.comet.ChannelEvent
  * @extends Jii.base.Event
  */
-module.exports = Jii.defineClass('Jii.comet.ChannelEvent', /** @lends Jii.comet.ChannelEvent.prototype */{
+var ChannelEvent = Jii.defineClass('Jii.comet.ChannelEvent', /** @lends Jii.comet.ChannelEvent.prototype */{
 
 	__extends: Event,
 
@@ -27,3 +27,5 @@ module.exports = Jii.defineClass('Jii.comet.ChannelEvent', /** @lends Jii.comet.
 	message: null
 
 });
+
+module.exports = ChannelEvent;

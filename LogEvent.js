@@ -12,7 +12,7 @@ var Event = require('jii/base/Event');
  * @class Jii.comet.LogEvent
  * @extends Jii.base.Event
  */
-module.exports = Jii.defineClass('Jii.comet.LogEvent', /** @lends Jii.comet.LogEvent.prototype */{
+var LogEvent = Jii.defineClass('Jii.comet.LogEvent', /** @lends Jii.comet.LogEvent.prototype */{
 
 	__extends: Event,
 
@@ -29,3 +29,5 @@ module.exports = Jii.defineClass('Jii.comet.LogEvent', /** @lends Jii.comet.LogE
 	message: null
 
 });
+
+module.exports = LogEvent;

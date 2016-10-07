@@ -13,7 +13,7 @@ var Response = require('jii/base/Response');
  * @class Jii.comet.server.Response
  * @extends Jii.base.Response
  */
-module.exports = Jii.defineClass('Jii.comet.server.Response', /** @lends Jii.comet.server.Response.prototype */{
+var Response = Jii.defineClass('Jii.comet.server.Response', /** @lends Jii.comet.server.Response.prototype */{
 
 	__extends: Response,
 
@@ -51,3 +51,5 @@ module.exports = Jii.defineClass('Jii.comet.server.Response', /** @lends Jii.com
 	}
 
 });
+
+module.exports = Response;

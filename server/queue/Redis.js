@@ -8,7 +8,7 @@ var redis = require('redis');
  * @class Jii.comet.server.queue.Redis
  * @extends Jii.comet.server.queue.QueueInterface
  */
-module.exports = Jii.defineClass('Jii.comet.server.queue.Redis', /** @lends Jii.comet.server.queue.Redis.prototype */{
+var Redis = Jii.defineClass('Jii.comet.server.queue.Redis', /** @lends Jii.comet.server.queue.Redis.prototype */{
 
 	__extends: QueueInterface,
 
@@ -112,3 +112,5 @@ module.exports = Jii.defineClass('Jii.comet.server.queue.Redis', /** @lends Jii.
 	}
 
 });
+
+module.exports = Redis;

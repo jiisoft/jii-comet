@@ -21,7 +21,7 @@ var RedisQueue = require('./queue/Redis');
  * @class Jii.comet.server.HubServer
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.comet.server.HubServer.prototype */{
+var HubServer = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.comet.server.HubServer.prototype */{
 
 	__extends: Component,
 
@@ -275,7 +275,7 @@ module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.co
 
             var data = JSON.parse(message);
             if (Jii.app.existsRoute(data.route)) {
-                var context = Jii.createContext();
+                var context = Jii.createContext({route: data.route});
 
                 data.request.uid = data.request.queryParams ? data.request.queryParams.requestUid : null;
 
@@ -300,3 +300,5 @@ module.exports = Jii.defineClass('Jii.comet.server.HubServer', /** @lends Jii.co
     }
 
 });
+
+module.exports = HubServer;

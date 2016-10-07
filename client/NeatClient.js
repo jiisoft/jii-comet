@@ -23,7 +23,7 @@ var NeatComet = require('neatcomet');
  * @extends Jii.base.Component
  * @implements NeatComet.api.ICometClient
  */
-module.exports = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.comet.client.NeatClient.prototype */{
+var NeatClient = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.comet.client.NeatClient.prototype */{
 
     __extends: Component,
 
@@ -187,3 +187,5 @@ module.exports = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
     }
 
 });
+
+module.exports = NeatClient;

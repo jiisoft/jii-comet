@@ -23,7 +23,7 @@ var NeatComet = require('neatcomet');
  * @implements NeatComet.api.ICometServer
  * @implements NeatComet.api.IOrmLoader
  */
-module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.comet.server.NeatServer.prototype */{
+var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.comet.server.NeatServer.prototype */{
 
     __extends: Object,
 
@@ -196,7 +196,7 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
      */
     loadRecords(modelClassName, match, whereType, where, attributes, binding) {
 
-        /** @typedef {Jii.base.ActiveRecord} modelClass  */
+        /** @typedef {Jii.base.BaseActiveRecord} modelClass  */
         var modelClass = Jii.namespace(modelClassName);
         if (!_isFunction(modelClass)) {
             throw new InvalidConfigException('Not found model `' + modelClassName + '` for binding');
@@ -310,3 +310,5 @@ module.exports = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     }
 
 });
+
+module.exports = NeatServer;

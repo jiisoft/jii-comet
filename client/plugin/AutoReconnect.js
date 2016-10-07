@@ -10,7 +10,7 @@ var PluginInterface = require('./PluginInterface');
  * @class Jii.comet.client.plugin.AutoReconnect
  * @extends Jii.comet.client.plugin.PluginInterface
  */
-module.exports = Jii.defineClass('Jii.comet.client.plugin.AutoReconnect', /** @lends Jii.comet.client.plugin.AutoReconnect.prototype */{
+var AutoReconnect = Jii.defineClass('Jii.comet.client.plugin.AutoReconnect', /** @lends Jii.comet.client.plugin.AutoReconnect.prototype */{
 
 	__extends: PluginInterface,
 
@@ -55,3 +55,5 @@ module.exports = Jii.defineClass('Jii.comet.client.plugin.AutoReconnect', /** @l
 	}
 
 });
+
+module.exports = AutoReconnect;

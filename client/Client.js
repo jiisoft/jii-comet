@@ -26,7 +26,7 @@ var stationUid = null;
  * @extends Jii.base.Component
  * @implements Jii.sql.remote.TransportInterface
  */
-module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet.client.Client.prototype */{
+var Client = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet.client.Client.prototype */{
 
 	__extends: Component,
 
@@ -437,3 +437,5 @@ module.exports = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet
 	}
 
 });
+
+module.exports = Client;

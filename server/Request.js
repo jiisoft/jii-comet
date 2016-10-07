@@ -12,7 +12,7 @@ var HttpRequest = require('jii/base/HttpRequest');
  * @class Jii.comet.server.Request
  * @extends Jii.base.HttpRequest
  */
-module.exports = Jii.defineClass('Jii.comet.server.Request', /** @lends Jii.comet.server.Request.prototype */{
+var Request = Jii.defineClass('Jii.comet.server.Request', /** @lends Jii.comet.server.Request.prototype */{
 
 	__extends: HttpRequest,
 
@@ -36,3 +36,5 @@ module.exports = Jii.defineClass('Jii.comet.server.Request', /** @lends Jii.come
 	}
 
 });
+
+module.exports = Request;

@@ -8,7 +8,7 @@ var Component = require('jii/base/Component');
  * @class Jii.comet.client.transport.TransportInterface
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.comet.client.transport.TransportInterface', /** @lends Jii.comet.client.transport.TransportInterface.prototype */{
+var TransportInterface = Jii.defineClass('Jii.comet.client.transport.TransportInterface', /** @lends Jii.comet.client.transport.TransportInterface.prototype */{
 
 	__extends: Component,
 
@@ -61,3 +61,5 @@ module.exports = Jii.defineClass('Jii.comet.client.transport.TransportInterface'
 	}
 
 });
+
+module.exports = TransportInterface;

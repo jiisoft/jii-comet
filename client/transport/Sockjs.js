@@ -26,7 +26,7 @@ var TransportInterface = require('./TransportInterface');
  * @class Jii.comet.client.transport.Sockjs
  * @extends Jii.comet.client.transport.TransportInterface
  */
-module.exports = Jii.defineClass('Jii.comet.client.transport.Sockjs', /** @lends Jii.comet.client.transport.Sockjs.prototype */{
+var Sockjs = Jii.defineClass('Jii.comet.client.transport.Sockjs', /** @lends Jii.comet.client.transport.Sockjs.prototype */{
 
 	__extends: TransportInterface,
 
@@ -101,3 +101,5 @@ module.exports = Jii.defineClass('Jii.comet.client.transport.Sockjs', /** @lends
 	}
 
 });
+
+module.exports = Sockjs;

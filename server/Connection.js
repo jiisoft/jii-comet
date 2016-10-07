@@ -13,7 +13,7 @@ var Component = require('jii/base/Component');
  * @class Jii.comet.server.Connection
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.comet.server.Connection', /** @lends Jii.comet.server.Connection.prototype */{
+var Connection = Jii.defineClass('Jii.comet.server.Connection', /** @lends Jii.comet.server.Connection.prototype */{
 
 	__extends: Component,
 
@@ -40,3 +40,5 @@ module.exports = Jii.defineClass('Jii.comet.server.Connection', /** @lends Jii.c
 	}
 
 });
+
+module.exports = Connection;

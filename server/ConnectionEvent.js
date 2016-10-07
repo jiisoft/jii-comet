@@ -12,7 +12,7 @@ var Event = require('jii/base/Event');
  * @class Jii.comet.server.ConnectionEvent
  * @extends Jii.base.Event
  */
-module.exports = Jii.defineClass('Jii.comet.server.ConnectionEvent', /** @lends Jii.comet.server.ConnectionEvent.prototype */{
+var ConnectionEvent = Jii.defineClass('Jii.comet.server.ConnectionEvent', /** @lends Jii.comet.server.ConnectionEvent.prototype */{
 
 	__extends: Event,
 
@@ -22,3 +22,5 @@ module.exports = Jii.defineClass('Jii.comet.server.ConnectionEvent', /** @lends 
 	connection: null
 
 });
+
+module.exports = ConnectionEvent;

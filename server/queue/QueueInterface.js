@@ -7,7 +7,7 @@ var Component = require('jii/base/Component');
  * @class Jii.comet.server.queue.QueueInterface
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.comet.server.queue.QueueInterface', /** @lends Jii.comet.server.queue.QueueInterface.prototype */{
+var QueueInterface = Jii.defineClass('Jii.comet.server.queue.QueueInterface', /** @lends Jii.comet.server.queue.QueueInterface.prototype */{
 
 	__extends: Component,
 
@@ -40,3 +40,5 @@ module.exports = Jii.defineClass('Jii.comet.server.queue.QueueInterface', /** @l
 	}
 
 });
+
+module.exports = QueueInterface;

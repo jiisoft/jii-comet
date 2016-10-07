@@ -17,7 +17,7 @@ var HubServer = require('./HubServer');
  * @class Jii.comet.server.Server
  * @extends Jii.comet.server.HubServer
  */
-module.exports = Jii.defineClass('Jii.comet.server.Server', /** @lends Jii.comet.server.Server.prototype */{
+var Server = Jii.defineClass('Jii.comet.server.Server', /** @lends Jii.comet.server.Server.prototype */{
 
 	__extends: HubServer,
 
@@ -311,3 +311,5 @@ module.exports = Jii.defineClass('Jii.comet.server.Server', /** @lends Jii.comet
 	}
 
 });
+
+module.exports = Server;
