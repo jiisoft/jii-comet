@@ -63,7 +63,7 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 		]);
 	},
 
-	subscribeT2est: function (test) {
+	subscribeTest: function (test) {
 		/** @typedef {Jii.comet.ChannelEvent} event */
 		var event = null;
 		Jii.app.comet.on(Server.EVENT_CHANNEL, function(e) {
@@ -133,7 +133,7 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 		}, 10);
 	},
 
-	pushActionToSelfT2est: function(test) {
+	pushActionToSelfTest: function(test) {
 		Jii.app.comet.hub.subscribe(HubServer.CHANNEL_NAME_ACTION);
 		Jii.app.cometListener.hub.unsubscribe(HubServer.CHANNEL_NAME_ACTION);
 
