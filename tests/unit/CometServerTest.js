@@ -32,7 +32,7 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 				className: Server,
 				port: this.__static.SERVER_PORT,
 				transport: {
-					className: require('jii-comet/server/transport/Sockjs')
+					className: require('../../server/transport/Sockjs')
 				}
 			},
 			cometListener: {
