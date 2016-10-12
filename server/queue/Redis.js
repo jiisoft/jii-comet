@@ -2,7 +2,6 @@
 
 var Jii = require('jii');
 var QueueInterface = require('./QueueInterface');
-var redis = require('redis');
 
 /**
  * @class Jii.comet.server.queue.Redis
@@ -50,7 +49,7 @@ var Redis = Jii.defineClass('Jii.comet.server.queue.Redis', /** @lends Jii.comet
 			options.auth_pass = this.password;
 		}
 
-		this._engine = redis.createClient(this.port, this.host, options);
+		this._engine = require('redis').createClient(this.port, this.host, options);
 		return new Promise(resolve => {
 			if (this._engine.connected) {
 				resolve();

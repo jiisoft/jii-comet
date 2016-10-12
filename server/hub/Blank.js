@@ -4,7 +4,6 @@
 var Jii = require('jii');
 var ChannelEvent = require('../../ChannelEvent');
 var HubInterface = require('./HubInterface');
-var redis = require("redis");
 
 /**
  * @class Jii.comet.server.hub.Blank

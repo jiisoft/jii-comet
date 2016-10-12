@@ -42,7 +42,13 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 				},
 			},
 			cometListener: {
-				className: HubServer
+				className: HubServer,
+				hub: {
+					className: require('../../server/hub/Blank')
+				},
+				queue: {
+					className: require('../../server/queue/Blank')
+				},
 			}
 		});
 	},

@@ -4,7 +4,6 @@
 var Jii = require('jii');
 var ChannelEvent = require('../../ChannelEvent');
 var HubInterface = require('./HubInterface');
-var redis = require("redis");
 
 /**
  * @class Jii.comet.server.hub.Redis
@@ -48,6 +47,7 @@ var Redis = Jii.defineClass('Jii.comet.server.hub.Redis', /** @lends Jii.comet.s
 			options.auth_pass = this.password;
 		}
 
+		const redis = require('redis');
 		this._hub = redis.createClient(this.port, this.host, options);
 		this._subscriber = redis.createClient(this.port, this.host, options);
 

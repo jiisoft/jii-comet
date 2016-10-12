@@ -2,7 +2,6 @@
 
 var Jii = require('jii');
 var QueueInterface = require('./QueueInterface');
-var redis = require('redis');
 
 /**
  * @class Jii.comet.server.queue.Blank
