@@ -22,8 +22,6 @@
     "url": "https://github.com/jiisoft/jii-comet/issues"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-easy": "^0.1.7",
     "nodeunit": "^0.10.2"
   },
   "dependencies": {

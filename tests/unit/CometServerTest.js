@@ -33,7 +33,13 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 				port: this.__static.SERVER_PORT,
 				transport: {
 					className: require('../../server/transport/Sockjs')
-				}
+				},
+				hub: {
+					className: require('../../server/hub/Blank')
+				},
+				queue: {
+					className: require('../../server/queue/Blank')
+				},
 			},
 			cometListener: {
 				className: HubServer
@@ -57,7 +63,7 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 		]);
 	},
 
-	subscribeTest: function (test) {
+	subscribeT2est: function (test) {
 		/** @typedef {Jii.comet.ChannelEvent} event */
 		var event = null;
 		Jii.app.comet.on(Server.EVENT_CHANNEL, function(e) {
@@ -127,7 +133,7 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 		}, 10);
 	},
 
-	pushActionToSelfTest: function(test) {
+	pushActionToSelfT2est: function(test) {
 		Jii.app.comet.hub.subscribe(HubServer.CHANNEL_NAME_ACTION);
 		Jii.app.cometListener.hub.unsubscribe(HubServer.CHANNEL_NAME_ACTION);
 
@@ -163,9 +169,6 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 	},
 
 	pushActionViaHubTest: function(test) {
-		Jii.app.comet.hub.unsubscribe(HubServer.CHANNEL_NAME_ACTION);
-		Jii.app.cometListener.hub.subscribe(HubServer.CHANNEL_NAME_ACTION);
-
 		var incomeMessage = null;
 		var connection = this._createConnection(function(m) { incomeMessage = m });
 

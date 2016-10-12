@@ -12,7 +12,7 @@ var Redis = Jii.defineClass('Jii.comet.server.queue.Redis', /** @lends Jii.comet
 
 	__extends: QueueInterface,
 
-	__static: /** @lends Jii.comet.server.HubServer */{
+	__static: /** @lends Jii.comet.queue.Redis */{
 
 		/**
 		 * @type {string}
