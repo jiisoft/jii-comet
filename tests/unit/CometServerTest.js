@@ -23,7 +23,7 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 	__extends: UnitTest,
 
 	__static: {
-		SERVER_PORT: 3300
+		SERVER_PORT: 8080
 	},
 
 	init: function() {
