@@ -12,7 +12,7 @@ var Request = require('../../server/Request');
 var HubInterface = require('../../server/hub/HubInterface');
 var UnitTest = require('jii/base/UnitTest');
 
-require('./bootstrap');
+require('../bootstrap');
 
 /**
  * @class tests.unit.CometServerTest

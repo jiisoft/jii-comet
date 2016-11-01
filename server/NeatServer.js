@@ -9,7 +9,7 @@ var Jii = require('jii');
 var Server = require('./Server');
 var Component = require('jii/base/Component');
 var Event = require('jii/base/Event');
-var ActiveRecord = require('jii-model/base/BaseActiveRecord');
+var ActiveRecord = require('jii/data/BaseActiveRecord');
 var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
 var _isEmpty = require('lodash/isEmpty');
@@ -186,7 +186,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     },
 
     /**
-     * @param {string|Jii.base.ActiveQuery} modelClassName
+     * @param {string|Jii.data.ActiveQuery} modelClassName
      * @param {object|null} match
      * @param {string} whereType
      * @param {string|null} where
@@ -196,13 +196,13 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
      */
     loadRecords(modelClassName, match, whereType, where, attributes, binding) {
 
-        /** @typedef {Jii.base.BaseActiveRecord} modelClass  */
+        /** @typedef {Jii.data.BaseActiveRecord} modelClass  */
         var modelClass = Jii.namespace(modelClassName);
         if (!_isFunction(modelClass)) {
             throw new InvalidConfigException('Not found model `' + modelClassName + '` for binding');
         }
 
-        /** @typedef {Jii.base.ActiveQuery} query  */
+        /** @typedef {Jii.data.ActiveQuery} query  */
         var query = modelClass.find();
 
         // Apply match condition
@@ -245,7 +245,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
 
     /**
      *
-     * @param {Jii.model.AfterSaveEvent} event
+     * @param {Jii.data.AfterSaveEvent} event
      * @param {} event.sender
      * @private
      */
@@ -258,7 +258,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
 
     /**
      *
-     * @param {Jii.model.AfterSaveEvent} event
+     * @param {Jii.data.AfterSaveEvent} event
      * @param {ActiveRecord} event.sender
      * @private
      */

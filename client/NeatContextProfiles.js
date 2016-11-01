@@ -7,7 +7,7 @@
 
 var Jii = require('jii');
 var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
-var Collection = require('jii-model/base/Collection');
+var Collection = require('jii/base/Collection');
 var _clone = require('lodash/clone');
 var INeatContextProfiles = require('../INeatContextProfiles');
 

@@ -7,9 +7,9 @@
 
 var Jii = require('jii');
 var Client = require('./Client');
-var ActiveRecord = require('jii-model/base/BaseActiveRecord');
+var ActiveRecord = require('jii/data/BaseActiveRecord');
 var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
-var Collection = require('jii-model/base/Collection');
+var Collection = require('jii/base/Collection');
 var _isFunction = require('lodash/isFunction');
 var _toArray = require('lodash/toArray');
 var _extend = require('lodash/extend');

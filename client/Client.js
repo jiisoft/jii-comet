@@ -24,7 +24,7 @@ var stationUid = null;
 /**
  * @class Jii.comet.client.Client
  * @extends Jii.base.Component
- * @implements Jii.sql.remote.TransportInterface
+ * @implements Jii.data.http.TransportInterface
  */
 var Client = Jii.defineClass('Jii.comet.client.Client', /** @lends Jii.comet.client.Client.prototype */{
 
